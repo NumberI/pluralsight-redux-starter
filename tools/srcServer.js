@@ -6,11 +6,15 @@ import open from 'open';
 
 /* eslint-disable no-console */
 
-const port = 3000;
+const port = 8080;
 const app = express();
 const compiler = webpack(config);
 
 app.use(require('webpack-dev-middleware')(compiler, {
+  watchOptions: {
+    aggregateTimeout: 300,
+    poll: true
+  },
   noInfo: true,
   publicPath: config.output.publicPath
 }));
@@ -24,7 +28,7 @@ app.get('*', function(req, res) {
 app.listen(port, function(err) {
   if (err) {
     console.log(err);
-  } else {
-    open(`http://localhost:${port}`);
-  }
+    return;
+  } 
+  console.log('Listening at http://localhost:', port);
 });

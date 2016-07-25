@@ -6,9 +6,9 @@ export default {
   devtool: 'cheap-module-eval-source-map',
   noInfo: false,
   entry: [
-    'eventsource-polyfill', // necessary for hot reloading with IE
+    './src/index',
     'webpack-hot-middleware/client?reload=true', //note that it reloads the page if hot module reloading fails.
-    './src/index'
+    'eventsource-polyfill' // necessary for hot reloading with IE
   ],
   target: 'web',
   output: {
@@ -20,6 +20,7 @@ export default {
     contentBase: './src'
   },
   plugins: [
+    new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin()
   ],
